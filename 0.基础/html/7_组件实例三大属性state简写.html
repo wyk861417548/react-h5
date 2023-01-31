@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 容器 -->
+  <div id="app"></div>
+
+  <!-- 引入react核心库 -->
+  <script src="../js/react.development.js"></script>
+  <!-- 引入react-dom， 用于支持react操作dom -->
+  <script src="../js/react-dom.development.js"></script>
+  <!-- 引入babel，用于将jsx转为js -->
+  <script src="../js/babel.min.js"></script>
+  
+  <script type="text/babel">//此处一定要写babel
+    class Weather extends React.Component{
+      state = {
+        isHot:false,
+        wind:'微风'
+      }
+      
+      //render调用几次？
+      render(){
+        console.log('render中的this:',this);
+        const {isHot,wind} = this.state;
+				return <h1 onClick={this.changeWeather}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
+      }
+
+      //changeWeather调用几次？
+      changeWeather = ()=>{
+        
+        console.log('changeWeather',this);
+        //严重注意：状态必须通过setState进行更新,且更新是一种合并，不是替换。
+        let isHot = this.state.isHot;
+
+        this.setState({isHot:!isHot})
+      }
+
+    }
+
+    // 2.渲染虚拟dom到页面
+    ReactDOM.render(<Weather/>,document.getElementById('app'))
+  </script>
+</body>
+</html>
